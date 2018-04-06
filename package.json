@@ -1,22 +1,22 @@
 {
-  "name": "intelligent-assistant-robot",
+  "name": "chat-robot",
   "version": "0.0.1",
   "description": "a robot can assist do sth.",
   "main": "src/index.js",
   "scripts": {
-    "start": "parcel index.html -p 8888",
+    "start": "open http://localhost:8888 && parcel index.html -p 8888",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/TimRChen/intelligent-assistant-robot.git"
+    "url": "git+https://github.com/TimRChen/chat-robot.git"
   },
   "author": "timrchen",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/TimRChen/intelligent-assistant-robot/issues"
+    "url": "https://github.com/TimRChen/chat-robot/issues"
   },
-  "homepage": "https://github.com/TimRChen/intelligent-assistant-robot#readme",
+  "homepage": "https://github.com/TimRChen/chat-robot#readme",
   "keywords": [],
   "dependencies": {
     "@tensorflow/tfjs": "^0.6.1",

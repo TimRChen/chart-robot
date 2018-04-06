@@ -77,7 +77,7 @@ parcelRequire = (function (modules, cache, entry) {
 
   // Override the current require with this new one
   return newRequire;
-})({3:[function(require,module,exports) {
+})({14:[function(require,module,exports) {
 /*******************************
  * 机器人绘制工具
  * @author TimRChen
@@ -1282,7 +1282,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ ])
 });
 ;
-},{}],4:[function(require,module,exports) {
+},{}],15:[function(require,module,exports) {
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -1306,20 +1306,20 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 var id = 'typed'; // 容器id名
 
 // 默认欢迎问候语
-var welcomeList = ['<i>Welcome</i> master...', 'I will be <i>full of service</i> to you...', 'So, what can I do for you...'];
+var welcomeList = ['欢迎光临!', '我能为你做点什么?'];
 
 // 匹配回答库
 var conversationList = {
-    'isWho': ['yep, i\'m robot', 'i\'m timrchen\'s intelligent assistant', 'fine, that\'s reapeat'],
-    'isWhat': ['I, Robot', '比如卖萌之类的~', 'So what? That\'s no meaning'],
-    'isDefault': ['Hi, i\'m still in here.', 'What can I do for you...', 'Haha, you must be kinding me :)'],
-    'isJoke': ['✧(≖ ◡ ≖✿)嘿嘿，接受我的魔法~', '这种=￣ω￣=够吗？', '卖萌什么的最拿手了~']
+    'isWho': ['是的，我是个机器人', '我是黄睿晨的智能小机器人略略略', '不好意思，你说的话它重复了😑'],
+    'isWhat': ['我是你爸爸', '我会卖个萌，不信你让我卖个萌', '说这些有啥意义啊?', '咋的，不服气啊?', '行了，看在我是个机器人的份上，你就别难为我了', '你快点爆了，你tm慢点点!'],
+    'isDefault': ['我还在.', '我能为你做点啥?', '你在逗我？这你都不会谷歌一下？', '听不懂你说啥..', '你再试试别的，试试问我能做些什么'],
+    'isJoke': ['✧(≖ ◡ ≖✿)嘿嘿，接受我的魔法~', '这种=￣ω￣=够吗？', '卖萌什么的最拿手了~嘤嘤嘤~']
 };
 
 // 匹配问题库
 var matchInputList = {
     'isWho': ['who', '你是谁', '你是'],
-    'isWhat': ['what', '你能做些什么', '你有哪些功能'],
+    'isWhat': ['what', '你能做些什么', '你有哪些功能', '傻', '智障'],
     'isJoke': ['卖个萌', '萌', 'mai\'meng']
 };
 
@@ -1328,8 +1328,10 @@ var matchInputList = {
  * @argument id 容器id
  */
 var createTextContainer = function createTextContainer(id) {
-    var textContainer = document.createElement('span');
+    var textContainer = document.createElement('div');
     var body = document.getElementsByTagName('body')[0];
+    textContainer.style.fontSize = '24px';
+    textContainer.style.height = '80px';
     textContainer.setAttribute('id', id);
     body.appendChild(textContainer);
 };
@@ -1338,7 +1340,7 @@ var createTextContainer = function createTextContainer(id) {
 var options = {
     'strings': welcomeList,
     // 'typeSpeed': 40,
-    'cursorChar': '_',
+    // 'cursorChar': '_',
     'showCursor': false,
     'fadeOut': true,
     'smartBackspace': true // Default value
@@ -1369,7 +1371,6 @@ var Conversation = function () {
         key: 'matchInput',
         value: function matchInput(inputString) {
             var result = 'isDefault';
-            inputString = inputString.split(' ').join('');
 
             var _loop = function _loop(matchInput) {
                 matchInputList[matchInput].map(function (item) {
@@ -1394,7 +1395,8 @@ var Conversation = function () {
         key: 'chatWithRobot',
         value: function chatWithRobot(inputString) {
             var matchType = this.matchInput(inputString);
-            var randomNum = Math.round(Math.random() * 2); // 目前随机在3以内
+            var randomLen = conversationList[matchType].length - 1; // 随机范围数字
+            var randomNum = Math.round(Math.random() * randomLen); // 目前随机在3以内
             options.strings = [conversationList[matchType][randomNum]];
             new _typed2.default('#' + id, options);
         }
@@ -1408,9 +1410,9 @@ exports.default = Conversation;
 },{"typed.js":5}],2:[function(require,module,exports) {
 'use strict';
 
-require('./draw');
+require('./handle/draw');
 
-var _conversation = require('./conversation');
+var _conversation = require('./handle/conversation');
 
 var _conversation2 = _interopRequireDefault(_conversation);
 
@@ -1430,23 +1432,33 @@ var conversation = new _conversation2.default(); // 引入机器人UI
 
 conversation.initialWelcome();
 
-// 初始化输入框
-(function () {
+// 初始化输入框及确认按钮
+(function (initialInputBox) {
+    initialInputBox();
+})(function () {
     var container = document.createElement('div');
     var input = document.createElement('input');
+    var confirmBtn = document.createElement('button');
     var body = document.getElementsByTagName('body')[0];
     container.setAttribute('class', 'fn-box');
     input.setAttribute('id', 'input-box');
+    input.setAttribute('placeholder', 'Please input in here.');
+    confirmBtn.setAttribute('class', 'fn-btn');
+    confirmBtn.innerText = '确认';
     input.style.border = 'none';
     input.style.outline = 'none';
     input.style.backgroundColor = '#000';
     input.style.color = '#fff';
-    input.setAttribute('placeholder', 'Please input in here.');
+    confirmBtn.style.fontSize = '24px';
+    confirmBtn.style.outline = 'none';
+    confirmBtn.style.borderRadius = '14px';
     body.appendChild(container);
     container.appendChild(input);
-})();
+    container.appendChild(confirmBtn);
+});
 
 var input = document.getElementById('input-box');
+var confirmBtn = document.getElementsByClassName('fn-btn')[0];
 var inputString = '';
 
 /**
@@ -1458,8 +1470,8 @@ var listenInput = function listenInput() {
     conversation.chatWithRobot(inputString);
 };
 
-input.addEventListener('input', listenInput, false);
-},{"./draw":3,"./conversation":4}],16:[function(require,module,exports) {
+confirmBtn.addEventListener('click', listenInput, false);
+},{"./handle/draw":14,"./handle/conversation":15}],16:[function(require,module,exports) {
 
 var OVERLAY_ID = '__parcel__error__overlay__';
 
@@ -1489,7 +1501,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = '' || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + '54320' + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + '53983' + '/');
   ws.onmessage = function (event) {
     var data = JSON.parse(event.data);
 

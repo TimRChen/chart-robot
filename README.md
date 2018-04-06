@@ -1,5 +1,10 @@
-# intelligent-assistant-robot
+# chat-robot
 A Robot use Tensorflow.js
+
+### 0.0.2 alpha
+
+-   修复了鬼畜的问题
+-   新增了一些机智的回答
 
 ### 0.0.1 alpha
 
@@ -9,8 +14,8 @@ A Robot use Tensorflow.js
 ### How to import
 >   注意，当前暂时无法这样引用
 ```js
-import cqrobot from 'intelligent-assistant-robot';
-cqrobot(); // that's done
+import chatRobt from 'chat-robot';
+chatRobt(); // that's done
 ```
 
 ### How to build
@@ -23,4 +28,4 @@ $ npm run dev
 
 ### License
 
-MIT © [TimRChen](https://github.com/TimRChen/intelligent-assistant-robot/blob/master/LICENSE)
+MIT © [TimRChen](https://github.com/TimRChen/chat-robot/blob/master/LICENSE)
